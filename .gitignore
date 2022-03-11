@@ -1,0 +1,4 @@
+/.vscode
+/README.MD
+/node_modules
+.env
