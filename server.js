@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./db/Connect.js";
 import AuthRouter from "./routes/AuthRoutes.js";
 import JobsRouter from "./routes/JobsRoutes.js";
+
+import 'express-async-errors'
 //middleware
 import errorHandlerMiddleware from "./middleware/Error-handler.js";
 import notFoundMiddleware from "./middleware/Not-found.js";
