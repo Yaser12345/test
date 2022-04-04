@@ -15,9 +15,12 @@ const app = express();
  
 app.use(express.json());
 
-// app.get("/", (req, res) => {
-//   res.send("Welcome!");
-// });
+app.get("/", (req, res) => {
+  res.json({msg:"welcome"});
+});
+app.get("/api/v1", (req, res) => {
+  res.json({msg:"api v1"});
+});
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/jobs", JobsRouter);
 
