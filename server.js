@@ -5,6 +5,7 @@ import AuthRouter from "./routes/AuthRoutes.js";
 import JobsRouter from "./routes/JobsRoutes.js";
 
 import 'express-async-errors'
+import morgan from "morgan"
 //middleware
 import errorHandlerMiddleware from "./middleware/Error-handler.js";
 import notFoundMiddleware from "./middleware/Not-found.js";
@@ -12,7 +13,11 @@ import notFoundMiddleware from "./middleware/Not-found.js";
 dotenv.config();
 
 const app = express();
- 
+
+if(process.env.NODE_ENV !== 'production'){
+  app.use(morgan('dev'))
+}
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -27,7 +32,7 @@ app.use("/api/v1/jobs", JobsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000; 
 
 const start = async () => {
   try {
