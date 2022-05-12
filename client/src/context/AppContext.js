@@ -5,6 +5,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
 } from "./Actions";
 import reducer from "./Reducer";
 import axios from "axios";
@@ -72,6 +75,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const loginUser = async (currentUser) => {
+    console.log(currentUser);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -79,6 +86,7 @@ const AppProvider = ({ children }) => {
         displayAlert,
         clearAlert,
         registerUser,
+        loginUser
       }}
     >
       {children}
