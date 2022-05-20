@@ -12,9 +12,9 @@ import {
 import reducer from "./Reducer";
 import axios from "axios";
 
-const token = localStorage.getItem('token')
-const user = localStorage.getItem('user')
-const userLocation = localStorage.getItem('location')
+const token = localStorage.getItem("token");
+const user = localStorage.getItem("user");
+const userLocation = localStorage.getItem("location");
 const initialState = {
   isLoading: false,
   showAlert: false,
@@ -76,8 +76,26 @@ const AppProvider = ({ children }) => {
   };
 
   const loginUser = async (currentUser) => {
-    console.log(currentUser);
-  }
+    dispatch({ type: LOGIN_USER_BEGIN });
+    try {
+      const { data } = await axios.post("/api/v1/auth/login", currentUser);
+      // console.log(response);
+      const { user, token, location } = data;
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: { user, token, location },
+      });
+
+      addUserToLocalStorage({ user, token, location });
+    } catch (error) {
+      // console.log(error.response);
+      dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
 
   return (
     <AppContext.Provider
@@ -86,7 +104,7 @@ const AppProvider = ({ children }) => {
         displayAlert,
         clearAlert,
         registerUser,
-        loginUser
+        loginUser,
       }}
     >
       {children}
