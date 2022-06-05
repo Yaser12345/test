@@ -1,13 +1,32 @@
-import {Landing, Dashboard, Error, Register} from "./pages";
+import { Landing, Dashboard, Error, Register, ProtectedRoute } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  AddJob,
+  AllJobs,
+  Profile,
+  Status,
+  SharedLayout,
+} from "./pages/dashboard";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/landing" element={<Landing/>}/>
-        <Route path="*" element={<Error/>}/>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <SharedLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Status />} />
+          <Route path="all-jobs" element={<AllJobs />} />
+          <Route path="add-job" element={<AddJob />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );
