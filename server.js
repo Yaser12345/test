@@ -9,6 +9,8 @@ import morgan from "morgan"
 //middleware
 import errorHandlerMiddleware from "./middleware/Error-handler.js";
 import notFoundMiddleware from "./middleware/Not-found.js";
+import AuthenticateUser from './middleware/Auth.js'
+
 
 dotenv.config();
 
@@ -27,7 +29,7 @@ app.get("/api/v1", (req, res) => {
   res.json({msg:"api v1"});
 });
 app.use("/api/v1/auth", AuthRouter);
-app.use("/api/v1/jobs", JobsRouter);
+app.use("/api/v1/jobs", AuthenticateUser, JobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
