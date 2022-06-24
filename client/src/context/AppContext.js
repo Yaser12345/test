@@ -54,10 +54,13 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("location");
   };
 
-  const setupUser = async ({currentUser, endPoint, alertText}) => {
+  const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
-      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser);
+      const { data } = await axios.post(
+        `/api/v1/auth/${endPoint}`,
+        currentUser
+      );
       // console.log(response);
       const { user, token, location } = data;
       dispatch({
@@ -77,13 +80,30 @@ const AppProvider = ({ children }) => {
   };
 
   const toggleSidebar = () => {
-    dispatch({type: TOGGLE_SIDEBAR})
-  }
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
 
   const logoutUser = () => {
-    dispatch({type: LOGOUT_USER})
-    removeUserFromLocalStorage()
-  }
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
+
+  const updateUser = async (currentUser) => {
+    try {
+      const { data } = await axios.patch(
+        "api/v1/auth/updateUser",
+        currentUser,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
+      )
+      console.log(data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -93,7 +113,8 @@ const AppProvider = ({ children }) => {
         clearAlert,
         setupUser,
         toggleSidebar,
-        logoutUser
+        logoutUser,
+        updateUser,
       }}
     >
       {children}
