@@ -2,10 +2,10 @@
   "name": "jobify-project",
   "version": "1.0.0",
   "description": "Project in Action - [Jobify](https://www.jobify.live/)",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon server --ignore client",
+    "server": "nodemon server.js --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\""
   },
