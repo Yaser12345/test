@@ -1,5 +1,4 @@
 import express from "express";
-
 import {
   createJob,
   deleteJob,
@@ -7,6 +6,7 @@ import {
   updateJob,
   showStatus,
 } from "../controllers/jobsController.js";
+import UnAuthenticatedError from "../errors/Unauthenticated.js";
 
 const router = express.Router()
 
