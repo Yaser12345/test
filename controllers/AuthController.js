@@ -48,17 +48,17 @@ const updateUser = async (req, res) => {
   if (!email || !name || !lastName || !location) {
     throw new BadRequestError("please provide all values");
   }
-  const user = await User.findOne({_id: req.user.userId})
-  user.email = email
-  user.name = name
-  user.lastName = lastName
-  user.location = location
+  const user = await User.findOne({ _id: req.user.userId });
+  user.email = email;
+  user.name = name;
+  user.lastName = lastName;
+  user.location = location;
 
-  await user.save()
+  await user.save();
 
-  const token = user.createJWT()
-  res.status(StatusCodes.OK).json({user, token, location: user.location})
-  res.send("updateUser");
+  const token = user.createJWT();
+  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  // return res.send("updateUser");
 };
 
 export { register, login, updateUser };
